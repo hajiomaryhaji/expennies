@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+use App\ConfigParser;
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
+use Doctrine\Migrations\Configuration\Migration\PhpFile;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use Symfony\Component\Console\Application;
+
+
+// replace with path to your own project bootstrap file
+require './bootstrap.php';
+
+// replace with mechanism to retrieve EntityManager in your app
+$entityManager = $container->get(EntityManager::class);
+
+$config = new PhpFile(__DIR__ . '/configs/migrations.php');
+
+$dependencyFactory = DependencyFactory::fromEntityManager(
+    $config,
+    new ExistingEntityManager($container->get(EntityManager::class))
+);
+
+$migrationCommands = require CONFIGS_PATH . '/commands/migration-commands.php';
+$customCommands = require CONFIGS_PATH . '/commands/custom-commands.php';
+
+$configParser = $container->get(ConfigParser::class);
+
+$cliApplication = new Application($configParser->get('app_name'), $configParser->get('app_version'));
+
+ConsoleRunner::addCommands($cliApplication, new SingleManagerProvider($entityManager));
+
+$cliApplication->addCommands($migrationCommands($dependencyFactory));
+$cliApplication->addCommands(array_map(fn($command) => $container->get($command), $customCommands));
+
+$cliApplication->run();

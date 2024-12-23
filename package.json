@@ -1,0 +1,23 @@
+{
+  "name": "framework",
+  "version": "1.0",
+  "author": {
+    "name": "Haji Omary Haji",
+    "email": "hajiomary@gmail.com"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "watch": "vite build --watch",
+    "build": "vite build --outDir public/build",
+    "preview": "vite preview --port 5000"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite-plugin-static-copy": "^2.2.0",
+    "vite-plugin-symfony": "^7.1.0"
+  }
+}
