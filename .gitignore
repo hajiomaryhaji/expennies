@@ -1,6 +1,7 @@
-node_modules/
+/node_modules/
 .env
 .phpunit.result.cache
 composer.lock
 package-lock.json
-storage/*
+/storage/*
+!storage/
