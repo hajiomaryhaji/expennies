@@ -5,5 +5,3 @@
 composer.lock
 package-lock.json
 /storage/*
-!storage/
-!storage/.gitkeep
