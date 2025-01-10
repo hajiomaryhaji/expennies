@@ -29,7 +29,7 @@ class ValidateSignedUrlMiddleware implements MiddlewareInterface
 
         $signatureValidator = hash_hmac('sha256', (string) $url, $this->configParser->get('app_key'));
 
-        if (!hash_equals($signatureValidator, $upcomingSignature) || !time() >= $expirationTime) {
+        if (!hash_equals($signatureValidator, $upcomingSignature) || !time() <= $expirationTime) {
             throw new \RuntimeException('Failed to verify signature', 502);
         }
 
