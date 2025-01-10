@@ -50,7 +50,7 @@ return [
     'redis' => [
         'host' => $_ENV['REDIS_HOST'],
         'port' => (int) $_ENV['REDIS_PORT'],
-        'password' => $_ENV['REDIS_PASSWORD']
+        // 'password' => $_ENV['REDIS_PASSWORD']
     ],
     'trusted_proxies' => []
 ];

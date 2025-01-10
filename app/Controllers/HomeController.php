@@ -25,6 +25,10 @@ class HomeController
         $recentTransactions = $this->transactionService->getRecentTransactions(8);
         $topSpendingCategories = $this->transactionService->getTopSpendingCategories(4);
 
+        // echo '<pre>';
+        // printf(date('d-m-Y h:i:s A', 1736526961));
+        // echo '</pre>';
+
         return $this->twig->render(
             $response,
             'dashboard.html.twig',
