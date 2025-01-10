@@ -21,10 +21,10 @@ trait HasTimestamps
     public function setTimeStamps(LifecycleEventArgs $args): void
     {
         if (!isset($this->createdAt)) {
-            $this->createdAt = new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'));
+            $this->createdAt = new \DateTime();
         }
 
-        $this->updatedAt = new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'));
+        $this->updatedAt = new \DateTime();
     }
 
     public function getCreatedAt(): \DateTime

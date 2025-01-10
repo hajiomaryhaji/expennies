@@ -20,14 +20,10 @@ class HomeController
     public function index(Response $response): Response
     {
         $startDate = \DateTime::createFromFormat('Y-m-d', date('Y-m-01'));
-        $endDate = new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'));
+        $endDate = new \DateTime();
         $totals = $this->transactionService->getTotals($startDate, $endDate);
         $recentTransactions = $this->transactionService->getRecentTransactions(8);
         $topSpendingCategories = $this->transactionService->getTopSpendingCategories(4);
-
-        // echo '<pre>';
-        // var_dump($this->transactionService->getTopSpendingCategories(5));
-        // echo '</pre>';
 
         return $this->twig->render(
             $response,

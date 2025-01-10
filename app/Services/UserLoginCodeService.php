@@ -22,7 +22,7 @@ class UserLoginCodeService
 
         $userLoginCode
             ->setCode($code)
-            ->setExpirationDate(new \DateTime('+30 minutes', new \DateTimeZone('Africa/Dar_es_salaam')))
+            ->setExpirationDate(new \DateTime())
             ->setUser($user);
 
         $this->entityManagerService->sync($userLoginCode);
@@ -40,7 +40,7 @@ class UserLoginCodeService
             return false;
         }
 
-        if ($userLoginCode->getExpirationDate() <= new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'))) {
+        if ($userLoginCode->getExpirationDate() <= new \DateTime()) {
             return false;
         }
 

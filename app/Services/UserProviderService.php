@@ -60,7 +60,7 @@ class UserProviderService implements UserProviderServiceInterface
 
     public function verifyUser(UserInterface $user): void
     {
-        $user->setVerifiedAt(new \DateTime('now'));
+        $user->setVerifiedAt(new \DateTime());
 
         $this->entityManagerService->sync($user);
     }

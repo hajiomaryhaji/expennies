@@ -65,7 +65,7 @@ class EmailService
         foreach ($queuedEmails as $queuedEmail) {
             $metadata = json_decode($queuedEmail->getMetadata(), true);
 
-            $expirationDate = new \DateTime('+30 minutes', new \DateTimeZone('Africa/Dar_es_salaam'));
+            $expirationDate = new \DateTime('+30 minutes');
 
             $context = match ($queuedEmail->getHtmlBody()) {
                 'emails/signup.html.twig' => [

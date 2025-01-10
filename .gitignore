@@ -1,7 +1,8 @@
 /node_modules
 /vendor
 .phpunit.result.cache
+phpunit.xml
 /storage/*
 !storage/
 !storage/.gitkeep
-public/build/
+public/build

@@ -39,7 +39,7 @@ class PasswordResetService
             ->andWhere('pr.expirationDate > :now')
             ->setParameter(':token', $token)
             ->setParameter(':isActive', true)
-            ->setParameter(':now', new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam')))
+            ->setParameter(':now', new \DateTime())
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -54,7 +54,7 @@ class PasswordResetService
             return null;
         }
 
-        if ($passwordReset->getExpirationDate() <= new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'))) {
+        if ($passwordReset->getExpirationDate() <= new \DateTime()) {
             return null;
         }
 
