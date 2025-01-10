@@ -67,7 +67,7 @@ return [
 
         return $app;
     },
-    ConfigParser::class => create(ConfigParser::class)->constructor(require CONFIGS_PATH . '../app-settings.php'),
+    ConfigParser::class => create(ConfigParser::class)->constructor(require CONFIGS_PATH . '/app-settings.php'),
     EntityManagerInterface::class => function (ConfigParser $configParser): EntityManager {
         $ormConfig = ORMSetup::createAttributeMetadataConfiguration(
             [$configParser->get('doctrine.entities_dir')],
