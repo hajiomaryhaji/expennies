@@ -6,7 +6,7 @@ use App\ConfigParser;
 use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
 use Doctrine\Migrations\Configuration\Migration\PhpFile;
 use Doctrine\Migrations\DependencyFactory;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 use Symfony\Component\Console\Application;
@@ -16,13 +16,13 @@ use Symfony\Component\Console\Application;
 require './bootstrap.php';
 
 // replace with mechanism to retrieve EntityManager in your app
-$entityManager = $container->get(EntityManager::class);
+$entityManager = $container->get(EntityManagerInterface::class);
 
 $config = new PhpFile(__DIR__ . '/configs/migrations.php');
 
 $dependencyFactory = DependencyFactory::fromEntityManager(
     $config,
-    new ExistingEntityManager($container->get(EntityManager::class))
+    new ExistingEntityManager($container->get(EntityManagerInterface::class))
 );
 
 $migrationCommands = require CONFIGS_PATH . '/commands/migration-commands.php';

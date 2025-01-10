@@ -3,10 +3,11 @@ export default {
   content: [
     './resources/**/*.twig',
     './resources/**/*.js', 
+    "./node_modules/flowbite/**/*.js"
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+  theme: {},
+  plugins: [
+    require('flowbite/plugin')
+]
 }
 

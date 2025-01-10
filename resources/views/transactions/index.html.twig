@@ -1,0 +1,160 @@
+{% extends "components/layout.html.twig" %}
+
+{% block title %}
+	Expennies | Transactions
+{% endblock %}
+
+{% block javascript %}
+	<script type="module" src="{{ vite_asset('resources/js/app.js') }}" defer></script>
+	<script type="module" src="{{ vite_asset('resources/js/transactions.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+	{% include "components/navbar.html.twig" %}
+
+
+	<main class="bg-white border-gray-200 dark:bg-gray-900">
+		<div class="max-w-screen-xl mx-auto p-4">
+			<div
+				role="status" class="min-h-96 p-4 border border-gray-200 rounded shadow md:p-6 dark:border-gray-700">
+				<!-- Modal toggle -->
+				<div class="flex justify-between text-xs gap-x-3 w-full mb-5">
+					<button class="openCreateTransactionModalButton inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm md:px-5 md:py-2.5 p-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+						<svg class="md:me-1 md:-ms-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+						</svg>
+						<span>New Transaction</span>
+					</button>
+					<button class="openImportTransactionsModalButton inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm md:px-5 md:py-2.5 p-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+						<svg class="md:me-1 md:-ms-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+						</svg>
+						Import Transactions
+					</button>
+				</div>
+
+				<!-- Main modal -->
+				<div id="createTransactionModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm">
+					<div
+						class="relative p-4 w-full max-w-md max-h-full">
+						<!-- Modal content -->
+						<div
+							class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+							<!-- Modal header -->
+							<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+								<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+									Create New Transaction
+								</h3>
+								<button type="button" class="closeCreateTransactionModalButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+									<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+										<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+									</svg>
+									<span class="sr-only">Close modal</span>
+								</button>
+							</div>
+							<!-- Modal body -->
+							<form class="p-4 md:p-5">
+								<div class="grid gap-4 mb-4 grid-cols-2">
+									<div class="col-span-2">
+										<label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+										<input type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type  description">
+									</div>
+									<div class="col-span-2">
+										<label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
+										<input type="number" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type  amount">
+									</div>
+									<div class="col-span-2">
+										<label for="Date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
+										<input type="datetime-local" name="date" id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type  date">
+									</div>
+									<div class="col-span-2">
+										<label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a category</label>
+										<select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+											<option selected>Choose a category</option>
+											{% for category in categories %}
+												<option value="{{ category.id }}">{{ category.name }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+									<svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+									</svg>
+									Add new transaction
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal structure -->
+				<div id="importTransactionsModal" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm">
+					<div
+						class="relative p-4 w-full max-w-md">
+						<!-- Modal content -->
+						<div
+							class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+							<!-- Modal header -->
+							<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+								<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+									Import Transactions
+								</h3>
+								<!-- Custom close button -->
+								<button type="button" class="closeImportTransactionsModalButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+									<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+										<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1l6 6m0 0l6 6M7 7L1 13M7 7l6-6"/>
+									</svg>
+									<span class="sr-only">Close modal</span>
+								</button>
+							</div>
+							<!-- Modal body -->
+							<div class="p-4 md:p-5">
+								<div class="grid gap-4 mb-4 grid-cols-2">
+									<div class="col-span-2">
+										<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="receipt_file">Select a CSV file to import</label>
+										<input name="importedCSVFile" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="csv_file" type="file">
+										<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Only CSV file (MAX. 5MB).</p>
+
+									</div>
+								</div>
+								<button type="button" class="import-transactions-btn text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+									<svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+									</svg>
+									Import
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				{% include "components/editTransactionModal.html.twig" %}
+				{% include "components/uploadTransactionReceiptModal.twig" %}
+
+
+				<div>
+					<table id="transactionsTable" class="display nowrap w-full">
+						<thead>
+							<tr>
+								<th>Description</th>
+								<th>Amount<span class="md:hidden">:</span>
+								</th>
+								<th>Category<span class="md:hidden">:</span>
+								</th>
+								<th>Receipts<span class="lg:hidden">:</span>
+								</th>
+								<th>Date<span class="lg:hidden">:</span>
+								</th>
+								<th>Actions<span class="lg:hidden">:</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

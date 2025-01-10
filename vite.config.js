@@ -7,10 +7,10 @@ export default defineConfig({
     symfonyPlugin(),
     viteStaticCopy({
       targets: [
-        // {
-        //   src: 'resources/assets/images/**/*',
-        //   dest: 'images',
-        // },
+        {
+          src: 'resources/assets/images/**/*',
+          dest: 'images',
+        },
         // {
         //   src: 'resources/assets/videos/**/*',
         //   dest: 'videos',
@@ -28,6 +28,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: './resources/js/app.js',
+        categories: './resources/js/categories.js',
+        transactions: './resources/js/transactions.js',
+        verify: './resources/js/verify.js',
+        auth: './resources/js/auth.js',
+        profile: './resources/js/profile.js',
+        forgotPassword: './resources/js/forgot-password.js',
+        dashboard: './resources/js/dashboard.js',
         theme: './resources/css/style.css',
       },
     },

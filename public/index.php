@@ -9,8 +9,4 @@ require __DIR__ . '/../bootstrap.php';
 
 $app = $container->get(App::class);
 
-$routes = require CONFIGS_PATH . '/routes/web.php';
-
-$routes($app);
-
 $app->run();

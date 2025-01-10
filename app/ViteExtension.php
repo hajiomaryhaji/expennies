@@ -48,6 +48,4 @@ class ViteExtension extends AbstractExtension
         throw new \RuntimeException(sprintf('Asset "%s" not found in Vite manifest or static folder.', $asset));
     }
 
-
-
 }

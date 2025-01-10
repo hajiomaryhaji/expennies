@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace App\Entities;
 
+use App\Contracts\OwnableInterface;
+use App\Contracts\UserInterface;
+use App\Traits\HasTimestamps;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 #[Entity, HasLifecycleCallbacks]
 #[Table('users')]
-class User
+class User implements UserInterface
 {
+    use HasTimestamps;
+
     #[Column(options: ['unsigned' => true]), Id, GeneratedValue]
     private int $id;
 
@@ -30,11 +35,32 @@ class User
     #[Column]
     private string $password;
 
-    #[Column(name: 'created_at')]
-    private \DateTime $createdAt;
+    #[Column(name: 'verified_at', nullable: true)]
+    private ?\DateTime $verifiedAt;
 
-    #[Column(name: 'updated_at')]
-    private \DateTime $updatedAt;
+    #[Column(name: 'enable_two_factor')]
+    private bool $enableTwoFactor;
+
+    #[OneToMany(targetEntity: Category::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $categories;
+
+    #[OneToMany(targetEntity: Transaction::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $transactions;
+
+    #[OneToMany(targetEntity: Email::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $emails;
+
+    #[OneToMany(targetEntity: UserLoginCode::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $codes;
+
+    public function __construct()
+    {
+        $this->enableTwoFactor = true;
+        $this->categories = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
+        $this->emails = new ArrayCollection();
+        $this->codes = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -77,23 +103,88 @@ class User
         return $this->password;
     }
 
-    #[PrePersist, PreUpdate]
-    public function setTimestamps(LifecycleEventArgs $args): void
+    public function addCategory(Category $category): User
     {
-        if (!isset($this->createdAt)) {
-            $this->createdAt = new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'));
-        }
+        $category->setUser($this);
 
-        $this->updatedAt = new \DateTime('now', new \DateTimeZone('Africa/Dar_es_salaam'));
+        $this->categories->add($category);
+
+        return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCategories(): Collection
     {
-        return $this->createdAt;
+        return $this->categories;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function addEmail(Email $email): User
     {
-        return $this->updatedAt;
+        $email->setUser($this);
+
+        $this->transactions->add($email);
+
+        return $this;
+    }
+
+    public function getEmails(): Collection
+    {
+        return $this->emails;
+    }
+
+    public function addCodes(UserLoginCode $code): User
+    {
+        $code->setUser($this);
+
+        $this->transactions->add($code);
+
+        return $this;
+    }
+
+    public function getCodes(): Collection
+    {
+        return $this->transactions;
+    }
+
+    public function addTransaction(Transaction $transaction): User
+    {
+        $transaction->setUser($this);
+
+        $this->transactions->add($transaction);
+
+        return $this;
+    }
+
+    public function getTransactions(): Collection
+    {
+        return $this->transactions;
+    }
+
+    public function setVerifiedAt(?\DateTime $verifiedAt): User
+    {
+        $this->verifiedAt = $verifiedAt;
+
+        return $this;
+    }
+
+    public function getVerifiedAt(): ?\DateTime
+    {
+        return $this->verifiedAt;
+    }
+
+    public function can(OwnableInterface $entity): bool
+    {
+        return $this->getId() === $entity->getUser()->getId();
+    }
+
+    public function setEnableTwoFactor(bool $enableTwoFactor): User
+    {
+        $this->enableTwoFactor = $enableTwoFactor;
+
+        return $this;
+    }
+
+    public function hasTwoFactorAuthEnabled(): bool
+    {
+        return $this->enableTwoFactor;
     }
 }

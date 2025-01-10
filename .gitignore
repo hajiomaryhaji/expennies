@@ -1,9 +1,7 @@
 /node_modules
 /vendor
-.env
 .phpunit.result.cache
-composer.lock
-package-lock.json
 /storage/*
 !storage/
 !storage/.gitkeep
+public/build/

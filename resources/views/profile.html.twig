@@ -1,0 +1,89 @@
+{% extends "components/layout.html.twig" %}
+
+{% block title %}
+	Expennies | Profile
+{% endblock %}
+
+{% block javascript %}
+	<script type="module" src="{{ vite_asset('resources/js/app.js') }}" defer></script>
+	<script type="module" src="{{ vite_asset('resources/js/profile.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+
+
+	{% include "components/navbar.html.twig" %}
+
+
+	<main class="bg-white border-gray-200 dark:bg-gray-900 mt-10">
+		<div class="max-w-screen-xl flex flex-col items-start justify-between space-y-5 mx-auto p-4">
+			<div class="w-full flex flex-wrap gap-x-14 p-4 border border-gray-200 rounded shadow md:p-6 dark:border-gray-700">
+				<div class="max-w-2xl flex-grow">
+					<h4 class="text-lg font-semibold mb-1">Profile Information</h4>
+					<p class="w-full">Update your account's profile information and email address.</p>
+					<form id="profile-update-form" data-id="{{ auth.id }}" class="mt-6 w-full">
+						<div class="grid gap-4 mb-4 grid-cols-2">
+							<div class="col-span-2">
+								<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+								<input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type  name">
+							</div>
+							<div class="col-span-2">
+								<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
+								<input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type  email address">
+							</div>
+							<div class="col-span-2" id="div-profile-btn">
+								<button type="button" id="update-profile-btn" class="w-20 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+									Save
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="flex justify-center items-start flex-col">
+					<p class="font-semibold text-lg text-green-500">Increase your account security.</p>
+					<div class="flex items-center mt-4">
+						<input id="two-factor-btn" data-id="{{ auth.id }}" name="two-factor" type="checkbox" value="2fa" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+						<label for="two-factor" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enable Two Factor Authentication via Email</label>
+					</div>
+				</div>
+			</div>
+			<div class="w-full p-4 border border-gray-200 rounded shadow md:p-6 dark:border-gray-700">
+				<h4 class="text-lg font-semibold mb-1">Update Password</h4>
+				<p class="max-w-2xl">Ensure your account is using a long, random password to stay secure.</p>
+				<form id="password-update-form" class="mt-6 max-w-2xl" data-id="{{ auth.id }}">
+					<div class="grid gap-4 mb-4 grid-cols-2">
+						<div class="col-span-2">
+							<label for="currentPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+							<input type="password" name="currentPassword" id="currentPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+						</div>
+						<div class="col-span-2">
+							<label for="newPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+							<input type="password" name="newPassword" id="newPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+						</div>
+						<div class="col-span-2">
+							<label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+							<input type="password" name="confirmPassword" id="confirmPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+						</div>
+						<div class="col-span-2" id="div-password-btn">
+							<button type="button" id="update-password-btn" class="w-20 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+								Save
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="w-full p-4 border border-gray-200 rounded shadow md:p-6 dark:border-gray-700">
+				<h4 class="text-lg font-semibold mb-1">Delete Account</h4>
+				<p class="max-w-2xl">Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</p>
+				<form class="mt-6 max-w-2xl">
+					<div class="grid gap-4 mb-4 grid-cols-2">
+						<button type="button" class="w-40 uppercase text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+							Delete Account
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+{% endblock %}

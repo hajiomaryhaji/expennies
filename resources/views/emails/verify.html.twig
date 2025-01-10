@@ -1,0 +1,30 @@
+{% extends "components/layout.html.twig" %}
+
+{% block title %}
+	Expennies | Email Verification
+{% endblock %}
+
+{% block javascript %}
+	<script type="module" src="{{ vite_asset('resources/js/app.js') }}" defer></script>
+	<script type="module" src="{{ vite_asset('resources/js/verify.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+	<div class="flex flex-col h-full">
+		{% include "components/navbar.html.twig" %}
+
+		<div class="md:container md:mx-auto flex-grow flex flex-col justify-center items-center md:px-0 px-4">
+			<div class="mt-6 h-16 w-16">
+				<svg class="h-full w-full text-red-500" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"/>
+					<line x1="15" y1="9" x2="9" y2="15"/>
+					<line x1="9" y1="9" x2="15" y2="15"/>
+				</svg>
+			</div>
+			<p class="font-semibold mb-10 text-center text-xl text-red-500">Oops! Please check your mailbox to verify and activate your account...</p>
+			<button type="button" id="resendVerificationBtn" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+				Resend Activation Link
+			</button>
+		</div>
+	</div>
+{% endblock %}

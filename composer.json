@@ -9,7 +9,16 @@
         "symfony/cache": "^7.2",
         "doctrine/migrations": "^3.8",
         "slim/twig-view": "^3.4",
-        "twig/intl-extra": "^3.17"
+        "twig/intl-extra": "^3.17",
+        "vlucas/valitron": "^1.4",
+        "slim/csrf": "^1.5",
+        "league/flysystem": "^3.0",
+        "league/mime-type-detection": "^1.16",
+        "monolog/monolog": "^3.8",
+        "symfony/mailer": "^7.2",
+        "symfony/twig-bridge": "^7.2",
+        "psr/simple-cache": "^3.0",
+        "symfony/rate-limiter": "^7.2"
     },
     "autoload": {
         "psr-4": {

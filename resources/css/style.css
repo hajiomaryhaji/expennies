@@ -1,3 +1,24 @@
+@import "../../node_modules/dataTables.net-dt/css/dataTables.dataTables.min.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
+
+@layer utilities {
+  .is-invalid-input {
+    @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500;
+  }
+
+  .is-invalid-label {
+    @apply text-red-700 dark:text-red-500;
+  }
+
+  .current-page {
+    @apply text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500;
+  }
+
+  .non-current-page {
+    @apply text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700;
+  }
+}

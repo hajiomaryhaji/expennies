@@ -1,0 +1,9 @@
+# Enforce LF for all text files
+* text=auto
+
+# Ensure JSON files use LF
+*.json text eol=lf
+
+# PHP and lock files use LF
+*.php text eol=lf
+*.lock text eol=lf
