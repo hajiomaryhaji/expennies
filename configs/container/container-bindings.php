@@ -140,8 +140,8 @@ return [
 
         // Connect to Redis server
         $redis->connect($redisConfigs['host'], $redisConfigs['port']);
-        $redis->auth($redisConfigs['password']);
-
+        // $redis->auth($redisConfigs['password']);
+    
         return new RedisAdapter($redis);
     },
     CacheInterface::class => fn(RedisAdapter $redisAdapter): CacheInterface => new Psr16Cache($redisAdapter),
