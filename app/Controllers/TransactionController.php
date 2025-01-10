@@ -49,7 +49,7 @@ class TransactionController
             new TransactionData(
                 $data['description'],
                 (float) $data['amount'],
-                new \DateTime($data['date'], new \DateTimeZone('Africa/Dar_es_salaam')),
+                new \DateTime($data['date']),
                 $data['category']
             )
             ,
@@ -118,7 +118,7 @@ class TransactionController
         $this->transactionService->update($transaction, new TransactionData(
             $data['description'],
             (float) $data['amount'],
-            new \DateTime($data['date'], new \DateTimeZone('Africa/Dar_es_salaam')),
+            new \DateTime($data['date']),
             $data['category']
         ));
 
